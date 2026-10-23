@@ -3,203 +3,418 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>旅遊手冊</title>
+  <title>關西小旅行 ⛩️ 大阪・京都 4天3夜</title>
 
   <!-- iOS 全螢幕 App 設定 -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="旅遊手冊">
+  <meta name="apple-mobile-web-app-title" content="關西手冊">
 
-  <!-- Tailwind CSS & Google Fonts -->
+  <!-- Tailwind CSS & Google Fonts (粉圓 / 圓體風格) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 
-  <!-- Firebase 經典相容版 SDK (免除模組載入失敗問題) -->
+  <!-- Firebase 經典穩定版 SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <style>
+    :root {
+      --bg-washi: #FFFCF6;
+      --ink-dark: #3E3A39;
+      --coral-pink: #F2A497;
+      --yamabuki-yellow: #F6D27A;
+      --mizu-cyan: #A8D3E6;
+      --wakatake-green: #B9DAA5;
+    }
+
     body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background-color: #FAF8F3;
-      color: #383431;
+      font-family: 'Zen Maru Gothic', 'M PLUS Rounded 1c', sans-serif;
+      background-color: #F5EFEB;
+      color: var(--ink-dark);
       -webkit-tap-highlight-color: transparent;
     }
-    .ink-border { border: 2px solid #383431; }
-    .tap-effect:active { transform: scale(0.97); }
+
+    /* 3px 墨灰粗線框規範 */
+    .ink-box {
+      border: 3px solid var(--ink-dark);
+    }
+    .ink-border-b {
+      border-bottom: 3px solid var(--ink-dark);
+    }
+
+    /* 支援減少動態效果 (prefers-reduced-motion) */
+    @media (prefers-reduced-motion: no-preference) {
+      .sway-slow {
+        animation: swayAnim 3.5s ease-in-out infinite alternate;
+      }
+      .float-slow {
+        animation: floatAnim 3s ease-in-out infinite alternate;
+      }
+      .tab-bounce {
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .tab-bounce:active {
+        transform: scale(0.93);
+      }
+    }
+
+    @keyframes swayAnim {
+      0% { transform: rotate(-2deg); }
+      100% { transform: rotate(2deg); }
+    }
+
+    @keyframes floatAnim {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-4px); }
+    }
   </style>
 </head>
-<body class="flex justify-center min-h-screen bg-[#F0ECE4] sm:py-6">
+<body class="flex justify-center min-h-screen sm:py-6">
 
-  <!-- 主容器 -->
-  <div class="w-full max-w-md bg-[#FAF8F3] min-h-screen sm:min-h-[844px] sm:rounded-3xl sm:shadow-2xl flex flex-col relative ink-border sm:overflow-hidden pb-12">
+  <!-- 手機外框主容器 -->
+  <div class="w-full max-w-md bg-[#FFFCF6] min-h-screen sm:min-h-[850px] sm:rounded-3xl sm:shadow-2xl flex flex-col relative ink-box sm:overflow-hidden pb-12">
 
-    <!-- 頂部標題區 -->
-    <header class="pt-5 pb-3 px-6 border-b border-[#EADFCF] bg-[#FAF8F3]/90 backdrop-blur sticky top-0 z-30">
-      <div class="flex items-center justify-between mb-4">
-        <div class="w-10 h-10 rounded-2xl bg-[#F8B4AD] ink-border flex items-center justify-center shadow-[1.5px_1.5px_0px_#383431]">
-          <svg class="w-6 h-6 text-[#383431]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="5" width="18" height="14" rx="4" fill="#FDE6E3"/>
-            <circle cx="8" cy="11" r="1.5" fill="#383431"/>
-            <circle cx="16" cy="11" r="1.5" fill="#383431"/>
-            <path d="M7 19l-2 2M17 19l2 2M9 5V3M15 5V3"/>
-          </svg>
+    <!-- 頂端固定選單 -->
+    <header class="pt-4 pb-3 px-5 border-b-[3px] border-[#3E3A39] bg-[#FFFCF6]/95 backdrop-blur sticky top-0 z-30">
+      <div class="flex items-center justify-between mb-3">
+        <!-- 大阪城 / 鳥居手繪插標 -->
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-2xl bg-[#F6D27A] ink-box flex items-center justify-center float-slow">
+            <svg class="w-6 h-6 text-[#3E3A39]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6h16M7 6v12M17 6v12M2 9h20M9 6V3h6v3"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-sm font-black tracking-tight" id="trip-header-title">關西 4天3夜 | 大阪・京都</h1>
+            <p class="text-[10px] text-stone-500 font-bold">2027.01.05 – 01.08</p>
+          </div>
         </div>
 
-        <h1 class="text-sm font-bold tracking-wide text-[#5C554F]" id="trip-header-title">釜山 5 天 4 夜 | 2026.11.11–11.15</h1>
-
-        <!-- 同步狀態 -->
-        <div class="flex items-center gap-1.5 bg-[#F2ECE1] px-2.5 py-1 rounded-full ink-border text-[11px] font-bold">
-          <span class="w-2 h-2 rounded-full bg-amber-400" id="sync-dot"></span>
-          <span id="sync-text">連線中...</span>
+        <!-- 雲端同步狀態燈 -->
+        <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-full ink-box text-[10px] font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" id="sync-dot"></span>
+          <span id="sync-text">已連線</span>
         </div>
       </div>
 
-      <!-- 分頁標籤 -->
-      <nav class="flex justify-end gap-2 text-sm font-bold">
-        <button onclick="switchTab('flights')" id="tab-flights" class="px-4 py-1 rounded-full text-[#7C7267] transition-all">航班</button>
-        <button onclick="switchTab('schedule')" id="tab-schedule" class="px-4 py-1 rounded-full bg-[#F8B4AD] text-[#383431] ink-border shadow-[1.5px_1.5px_0px_#383431] transition-all">行程</button>
-        <button onclick="switchTab('checklist')" id="tab-checklist" class="px-4 py-1 rounded-full text-[#7C7267] transition-all">準備</button>
+      <!-- 導覽頁籤 -->
+      <nav class="flex justify-between gap-1 text-xs font-black">
+        <button onclick="switchTab('overview')" id="tab-overview" class="flex-1 py-1.5 rounded-xl bg-[#F2A497] text-[#3E3A39] ink-box tab-bounce">首頁</button>
+        <button onclick="switchTab('schedule')" id="tab-schedule" class="flex-1 py-1.5 rounded-xl bg-white text-stone-600 ink-box tab-bounce">行程</button>
+        <button onclick="switchTab('flights')" id="tab-flights" class="flex-1 py-1.5 rounded-xl bg-white text-stone-600 ink-box tab-bounce">航班</button>
+        <button onclick="switchTab('stay')" id="tab-stay" class="flex-1 py-1.5 rounded-xl bg-white text-stone-600 ink-box tab-bounce">住宿/清單</button>
       </nav>
     </header>
 
-    <!-- 主要內容區 -->
+    <!-- 主內容區 -->
     <main class="flex-1 px-5 pt-4">
 
-      <!-- 行程分頁 -->
-      <section id="view-schedule" class="space-y-6">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-full bg-[#F8B4AD] ink-border flex items-center justify-center">
-            <span class="text-xs">🚠</span>
+      <!-- ================= 1. 首頁與倒數分頁 ================= -->
+      <section id="view-overview" class="space-y-4">
+        
+        <!-- 手繪風主插畫卡片 -->
+        <div class="bg-[#A8D3E6] rounded-3xl p-5 ink-box text-center relative overflow-hidden">
+          <div class="flex justify-center items-center gap-3 my-2 sway-slow">
+            <!-- 京都鳥居 SVG -->
+            <svg class="w-16 h-16 drop-shadow-sm" viewBox="0 0 64 64" fill="none">
+              <rect x="6" y="14" width="52" height="6" rx="2" fill="#F2A497" stroke="#3E3A39" stroke-width="3"/>
+              <rect x="12" y="22" width="40" height="5" rx="1.5" fill="#F2A497" stroke="#3E3A39" stroke-width="3"/>
+              <rect x="18" y="22" width="6" height="38" rx="2" fill="#F2A497" stroke="#3E3A39" stroke-width="3"/>
+              <rect x="40" y="22" width="6" height="38" rx="2" fill="#F2A497" stroke="#3E3A39" stroke-width="3"/>
+              <rect x="27" y="10" width="10" height="12" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/>
+            </svg>
+            <!-- 大阪城天守閣 SVG -->
+            <svg class="w-16 h-16 drop-shadow-sm" viewBox="0 0 64 64" fill="none">
+              <path d="M12 56h40L48 38H16L12 56z" fill="#FFF" stroke="#3E3A39" stroke-width="3"/>
+              <path d="M18 38L32 18l14 20H18z" fill="#B9DAA5" stroke="#3E3A39" stroke-width="3"/>
+              <circle cx="32" cy="14" r="3" fill="#F6D27A" stroke="#3E3A39" stroke-width="2"/>
+              <rect x="26" y="44" width="12" height="12" rx="2" fill="#F2A497" stroke="#3E3A39" stroke-width="2"/>
+            </svg>
           </div>
-          <h2 class="text-xl font-bold tracking-tight">每日行程</h2>
+          <h2 class="text-xl font-black tracking-wide mt-2">關西潮流・古都慢行</h2>
+          <p class="text-xs font-bold text-[#3E3A39]/80 mt-1">神戶 ➔ 大阪潮流掃街 ➔ 京都嵐山清水寺</p>
         </div>
 
-        <!-- 橫向日期滑軌 -->
-        <div class="relative py-2">
-          <div class="absolute top-[26px] left-4 right-4 h-[2px] bg-[#383431]"></div>
-          <div class="flex justify-between relative z-10 text-center" id="date-buttons-container"></div>
-        </div>
-
-        <!-- 當天摘要卡片 -->
-        <div class="bg-[#FDE6E3] p-4 rounded-2xl ink-border shadow-[2px_2px_0px_#383431]">
-          <div class="flex items-start gap-3">
-            <div class="w-12 h-10 rounded-xl bg-white/70 ink-border flex items-center justify-center shrink-0">
-              <span class="text-lg">🚠</span>
-            </div>
-            <div>
-              <span class="text-xs font-bold text-[#A85850] uppercase" id="day-badge">Day 2</span>
-              <h3 class="font-bold text-base mt-0.5" id="day-title">白淺灘文化村 + 松島纜車</h3>
-              <p class="text-xs text-[#73685E] mt-1" id="day-hotel">🏨 住 京城飯店（西面）</p>
-            </div>
+        <!-- 出發倒數卡片 -->
+        <div class="bg-[#F6D27A] rounded-2xl p-4 ink-box flex items-center justify-between">
+          <div>
+            <span class="text-[11px] font-black uppercase text-[#3E3A39]/80 block">COUNTDOWN</span>
+            <span class="text-sm font-bold">距離出發日本還有</span>
+          </div>
+          <div class="flex items-baseline gap-1 bg-white px-4 py-2 rounded-xl ink-box">
+            <span class="text-2xl font-black text-[#F2A497]" id="countdown-days">--</span>
+            <span class="text-xs font-black">天</span>
           </div>
         </div>
 
-        <!-- 時間軸節點 -->
-        <div class="relative pl-6 space-y-5" id="timeline-container">
-          <div class="absolute left-[11px] top-2 bottom-2 w-[2px] border-l-2 border-dashed border-[#8E8275]"></div>
-          <div class="text-center py-8 text-sm text-[#8E8275]">雲端資料載入中...</div>
+        <!-- 樂享券票券小幫手 -->
+        <div class="bg-white rounded-2xl p-4 ink-box space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded-md bg-[#B9DAA5] text-[10px] font-black ink-box">3 設施免費</span>
+            <h3 class="text-xs font-black">關西樂享周遊券 (Have Fun in Kansai)</h3>
+          </div>
+          <ul class="text-xs font-bold text-stone-600 space-y-1 pl-1">
+            <li>✨ <b>Day 1</b>：Harukas 300 展望台門票</li>
+            <li>✨ <b>Day 2</b>：嵐山美食小吃兌換（可樂餅／和菓子）</li>
+            <li>✨ <b>Day 4</b>：大阪城御座船遊船搭乘</li>
+          </ul>
         </div>
+
       </section>
 
-      <!-- 航班分頁 -->
-      <section id="view-flights" class="hidden space-y-4">
-        <h2 class="text-xl font-bold mb-3">航班資訊 ✈️</h2>
-        <div class="bg-white p-4 rounded-2xl ink-border shadow-[2px_2px_0px_#383431] space-y-3">
-          <div class="flex justify-between items-center text-xs font-bold text-[#8E8275]">
-            <span>去程 • 2026.11.11</span>
-            <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full ink-border">準點</span>
+      <!-- ================= 2. 每日行程分頁 ================= -->
+      <section id="view-schedule" class="hidden space-y-5">
+        
+        <!-- 每日行程 標題列 -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-[#F6D27A] ink-box flex items-center justify-center">
+              <span class="text-xs">📍</span>
+            </div>
+            <h2 class="text-lg font-black tracking-tight">每日時間軸</h2>
           </div>
-          <div class="flex justify-between items-center py-2 border-y border-dashed border-[#DDD5C7]">
+          <span class="text-xs font-bold text-stone-500" id="current-day-label">Day 1</span>
+        </div>
+
+        <!-- 橫向軌道與日期切換 (帶阪急/阪神小電車滑動) -->
+        <div class="relative py-2">
+          <!-- 橫線軌道 -->
+          <div class="absolute top-[26px] left-3 right-3 h-[3px] bg-[#3E3A39]"></div>
+          
+          <div class="flex justify-between relative z-10 text-center" id="date-buttons-container">
+            <!-- 由 JS 動態生成 4 天日期 -->
+          </div>
+        </div>
+
+        <!-- 當天概要卡片 -->
+        <div class="bg-[#F2A497] p-4 rounded-2xl ink-box text-[#3E3A39] relative">
+          <div class="flex items-start gap-3">
+            <div class="w-11 h-11 rounded-xl bg-white ink-box flex items-center justify-center shrink-0">
+              <span class="text-lg" id="day-icon">✈️</span>
+            </div>
+            <div>
+              <span class="text-[10px] font-black bg-white/80 px-2 py-0.5 rounded-md ink-box" id="day-badge">Day 1</span>
+              <h3 class="font-black text-sm mt-1" id="day-title">抵達關西 + 橘子街掃街</h3>
+              <p class="text-xs font-bold text-[#3E3A39]/80 mt-1" id="day-hotel">🏨 心齋橋公寓飯店</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 時間軸列表 -->
+        <div class="relative pl-6 space-y-4" id="timeline-container">
+          <div class="absolute left-[11px] top-2 bottom-2 w-[3px] border-l-[3px] border-dashed border-[#3E3A39]"></div>
+          <!-- 由 JS 渲染節點 -->
+        </div>
+
+      </section>
+
+      <!-- ================= 3. 航班分頁 ================= -->
+      <section id="view-flights" class="hidden space-y-4">
+        <h2 class="text-lg font-black mb-2 flex items-center gap-2">
+          <span>✈️</span> 航班資訊
+        </h2>
+        
+        <!-- 去程卡片 -->
+        <div class="bg-white p-4 rounded-2xl ink-box space-y-3">
+          <div class="flex justify-between items-center text-xs font-black">
+            <span class="bg-[#A8D3E6] px-2 py-0.5 rounded-lg ink-box">去程 • 1/5 (週一)</span>
+            <span class="text-stone-500">直飛神戶</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-y-[2px] border-dashed border-stone-200">
             <div class="text-center">
-              <p class="text-2xl font-black">TPE</p>
-              <p class="text-xs text-stone-500">桃園 07:45</p>
+              <p class="text-xl font-black">TPE</p>
+              <p class="text-[11px] text-stone-500 font-bold">桃園出發</p>
             </div>
             <div class="text-center text-xs text-stone-400">
-              <span>2h 15m</span>
-              <div class="w-20 h-[1.5px] bg-stone-300 my-1 relative">
-                <span class="absolute -top-1.5 right-8 text-[10px]">✈️</span>
+              <span class="text-[11px] font-bold text-stone-600">抵達神戶 12:30</span>
+              <div class="w-24 h-[2px] bg-[#3E3A39] my-1 relative">
+                <span class="absolute -top-2 right-10 text-[10px]">✈️</span>
               </div>
             </div>
             <div class="text-center">
-              <p class="text-2xl font-black">PUS</p>
-              <p class="text-xs text-stone-500">金海 11:00</p>
+              <p class="text-xl font-black">UKB</p>
+              <p class="text-[11px] text-stone-500 font-bold">神戶 12:30 抵達</p>
             </div>
           </div>
-          <p class="text-xs text-stone-500">星宇航空 JX800 • 第一航廈</p>
+          <p class="text-xs text-stone-500 font-bold">🛄 入境領行李後，搭 Port Liner 轉阪神電車直達難波</p>
+        </div>
+
+        <!-- 回程卡片 -->
+        <div class="bg-white p-4 rounded-2xl ink-box space-y-3">
+          <div class="flex justify-between items-center text-xs font-black">
+            <span class="bg-[#F6D27A] px-2 py-0.5 rounded-lg ink-box">回程 • 1/8 (週四)</span>
+            <span class="text-stone-500">神戶返台</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-y-[2px] border-dashed border-stone-200">
+            <div class="text-center">
+              <p class="text-xl font-black">UKB</p>
+              <p class="text-[11px] text-stone-500 font-bold">神戶 17:30</p>
+            </div>
+            <div class="text-center text-xs text-stone-400">
+              <span class="text-[11px] font-bold text-stone-600">飛行 3h 20m</span>
+              <div class="w-24 h-[2px] bg-[#3E3A39] my-1 relative">
+                <span class="absolute -top-2 right-10 text-[10px]">✈️</span>
+              </div>
+            </div>
+            <div class="text-center">
+              <p class="text-xl font-black">TPE</p>
+              <p class="text-[11px] text-stone-500 font-bold">桃園 19:50</p>
+            </div>
+          </div>
+          <p class="text-xs text-stone-500 font-bold">🛍️ 15:30 抵達神戶機場託運，免稅店採買風月堂法蘭酥、神戶布丁</p>
         </div>
       </section>
 
-      <!-- 準備分頁 -->
-      <section id="view-checklist" class="hidden space-y-4">
-        <h2 class="text-xl font-bold mb-3">行前準備與清單 🧳</h2>
-        <div class="bg-white p-4 rounded-2xl ink-border shadow-[2px_2px_0px_#383431] space-y-3">
-          <label class="flex items-center gap-3 text-sm font-bold cursor-pointer">
-            <input type="checkbox" checked class="w-5 h-5 accent-[#F8B4AD] rounded ink-border">
-            <span>護照有效期限 6 個月以上</span>
-          </label>
-          <label class="flex items-center gap-3 text-sm font-bold cursor-pointer">
-            <input type="checkbox" checked class="w-5 h-5 accent-[#F8B4AD] rounded ink-border">
-            <span>填寫 Q-CODE 或 入境健康申報</span>
-          </label>
-          <label class="flex items-center gap-3 text-sm font-bold cursor-pointer">
-            <input type="checkbox" class="w-5 h-5 accent-[#F8B4AD] rounded ink-border">
-            <span>開通韓國 eSIM 網路流量</span>
-          </label>
-          <label class="flex items-center gap-3 text-sm font-bold cursor-pointer">
-            <input type="checkbox" class="w-5 h-5 accent-[#F8B4AD] rounded ink-border">
-            <span>準備 WOWPASS / T-money 交通卡</span>
-          </label>
+      <!-- ================= 4. 住宿與待辦清單 ================= -->
+      <section id="view-stay" class="hidden space-y-4">
+        <h2 class="text-lg font-black mb-2 flex items-center gap-2">
+          <span>🏨</span> 住宿與行前準備
+        </h2>
+
+        <!-- 飯店資訊卡片 -->
+        <div class="bg-[#B9DAA5] p-4 rounded-2xl ink-box space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-black bg-white px-2 py-0.5 rounded-lg ink-box">3 晚連住</span>
+            <span class="text-xs font-bold text-stone-700">心齋橋站周邊</span>
+          </div>
+          <h3 class="text-base font-black">心齋橋公寓飯店（30㎡ 大空間）</h3>
+          <p class="text-xs font-bold text-stone-800 leading-relaxed">
+            • 地面可完全攤平兩個大行李箱 🧳🧳<br>
+            • 鄰近 Orange Street 橘子街與道頓堀<br>
+            • 周邊藥妝店密集（松本清、Sundrug），買完直接拿回房間放！
+          </p>
+        </div>
+
+        <!-- 待辦清單 (可打勾) -->
+        <div class="bg-white p-4 rounded-2xl ink-box space-y-3">
+          <h3 class="text-sm font-black border-b-2 border-stone-100 pb-2">出國必備 Check-list 🎒</h3>
+          <div class="space-y-2 text-xs font-bold">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" checked class="w-4 h-4 accent-[#F2A497] rounded ink-box">
+              <span>護照效期 6 個月以上</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" checked class="w-4 h-4 accent-[#F2A497] rounded ink-box">
+              <span>填寫 Visit Japan Web (入境與海關申報 QR)</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 accent-[#F2A497] rounded ink-box">
+              <span>購買開通日本 eSIM 網路卡</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 accent-[#F2A497] rounded ink-box">
+              <span>預訂關西樂享券 (Have Fun in Kansai)</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 accent-[#F2A497] rounded ink-box">
+              <span>準備 iPhone Suica / ICOCA 交通卡</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 accent-[#F2A497] rounded ink-box">
+              <span>日幣現金與信用卡（海外高回饋）</span>
+            </label>
+          </div>
         </div>
       </section>
 
     </main>
 
-    <!-- 新增按鈕 (FAB) -->
-    <button onclick="openModal()" class="fixed sm:absolute bottom-6 right-6 w-14 h-14 bg-[#F8B4AD] ink-border rounded-full flex items-center justify-center shadow-[3px_3px_0px_#383431] tap-effect z-40">
-      <svg class="w-7 h-7 text-[#383431]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+    <!-- 懸浮新增行程按鈕 (FAB) -->
+    <button onclick="openModal()" class="fixed sm:absolute bottom-5 right-5 w-14 h-14 bg-[#F6D27A] ink-box rounded-full flex items-center justify-center shadow-[3px_3px_0px_#3E3A39] tab-bounce z-40">
+      <svg class="w-7 h-7 text-[#3E3A39]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
       </svg>
     </button>
 
-    <!-- 新增行程彈跳視窗 -->
+    <!-- 新增 / 修改行程彈出視窗 -->
     <div id="modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div class="bg-[#FAF8F3] w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 ink-border shadow-2xl space-y-4">
-        <div class="flex justify-between items-center border-b border-[#EADFCF] pb-3">
-          <h3 class="font-bold text-lg">新增景點 / 交通 ✍️</h3>
-          <button onclick="closeModal()" class="text-stone-400 hover:text-stone-700 text-xl font-bold">✕</button>
+      <div class="bg-[#FFFCF6] w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 ink-box shadow-2xl space-y-4">
+        <div class="flex justify-between items-center border-b-[2px] border-stone-200 pb-3">
+          <h3 class="font-black text-base">新增行程節點 ✍️</h3>
+          <button onclick="closeModal()" class="text-stone-400 hover:text-stone-700 text-lg font-black">✕</button>
         </div>
 
         <form id="add-item-form" class="space-y-3">
           <div>
-            <label class="text-xs font-bold text-stone-500">類別</label>
-            <select id="item-type" class="w-full mt-1 p-2 rounded-xl bg-white ink-border text-sm font-bold">
-              <option value="spot">景點 / 餐廳 (卡片)</option>
-              <option value="transit">交通接駁 (膠囊標籤)</option>
+            <label class="text-[11px] font-black text-stone-500">類型</label>
+            <select id="item-type" class="w-full mt-1 p-2 rounded-xl bg-white ink-box text-xs font-black">
+              <option value="spot">景點 / 餐廳 / 逛街 (卡片)</option>
+              <option value="transit">交通接駁 (彩色膠囊標籤)</option>
             </select>
           </div>
 
           <div class="flex gap-2">
             <div class="w-1/3">
-              <label class="text-xs font-bold text-stone-500">時間</label>
-              <input type="text" id="item-time" placeholder="10:00" required class="w-full mt-1 p-2 rounded-xl bg-white ink-border text-sm font-bold">
+              <label class="text-[11px] font-black text-stone-500">時間</label>
+              <input type="text" id="item-time" placeholder="15:30" required class="w-full mt-1 p-2 rounded-xl bg-white ink-box text-xs font-black">
             </div>
             <div class="w-2/3">
-              <label class="text-xs font-bold text-stone-500">標題 / 景點名稱</label>
-              <input type="text" id="item-title" placeholder="ARTE MUSEUM" required class="w-full mt-1 p-2 rounded-xl bg-white ink-border text-sm font-bold">
+              <label class="text-[11px] font-black text-stone-500">名稱</label>
+              <input type="text" id="item-title" placeholder="Orange Street 掃街" required class="w-full mt-1 p-2 rounded-xl bg-white ink-box text-xs font-black">
             </div>
           </div>
 
           <div>
-            <label class="text-xs font-bold text-stone-500">備註說明</label>
-            <input type="text" id="item-desc" placeholder="預計停留 1.5–2 小時" class="w-full mt-1 p-2 rounded-xl bg-white ink-border text-sm">
+            <label class="text-[11px] font-black text-stone-500">詳細說明 / 備註</label>
+            <input type="text" id="item-desc" placeholder="Supreme, Stüssy, WTAPS" class="w-full mt-1 p-2 rounded-xl bg-white ink-box text-xs">
+          </div>
+
+          <div class="flex items-center gap-2 pt-1">
+            <input type="checkbox" id="item-mustgo" class="w-4 h-4 accent-[#F2A497] rounded ink-box">
+            <label for="item-mustgo" class="text-xs font-black text-[#F2A497]">標註為「必去」行程 🔥</label>
           </div>
 
           <div class="pt-2 flex gap-2">
-            <button type="button" onclick="closeModal()" class="flex-1 py-2.5 rounded-xl bg-stone-200 text-stone-700 font-bold text-sm">取消</button>
-            <button type="submit" class="flex-1 py-2.5 rounded-xl bg-[#F8B4AD] ink-border font-bold text-sm shadow-[2px_2px_0px_#383431] tap-effect">同步儲存</button>
+            <button type="button" onclick="closeModal()" class="flex-1 py-2.5 rounded-xl bg-stone-200 text-stone-700 font-black text-xs">取消</button>
+            <button type="submit" class="flex-1 py-2.5 rounded-xl bg-[#F2A497] ink-box font-black text-xs shadow-[2px_2px_0px_#3E3A39] tab-bounce">即時同步</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 1. 大阪 + 京都 4 天 3 夜專屬初始行程資料 (內建「必去」標章與交通小標籤)
+    const initialTripData = {
+      title: "關西 4天3夜 | 大阪・京都",
+      days: [
+        {
+          date: "1/5",
+          weekDay: "週一",
+          title: "抵達關西 ➔ 橘子街日潮掃街 ➔ 道頓堀 ➔ Harukas 300 夜景",
+          hotel: "心齋橋公寓飯店（30㎡ 大空間）",
+          timeline: [
+            { id: "1-1", type: "transit", time: "12:30", title: "抵達神戶機場", desc: "辦理入境與領取大行李" },
+            { id: "1-2", type: "transit", time: "13:45", title: "Port Liner ➔ 阪神電車快速急行直達「難波」", desc: "神戶三宮轉乘直奔大阪" },
+            { id: "1-3", type: "spot", time: "15:00", title: "心齋橋飯店辦理入住", desc: "放下兩個大行李箱輕裝出發" },
+            { id: "1-4", type: "spot", time: "15:30", title: "南堀江 Orange Street 橘子街掃街", desc: "鎖定 Supreme、Stüssy、NEIGHBORHOOD、WTAPS、2nd STREET，約 19:00 打烊", mustGo: true },
+            { id: "1-5", type: "spot", time: "18:30", title: "道頓堀打卡與晚餐", desc: "跑跑人看板打卡，享用大阪燒、黑毛和牛燒肉" },
+            { id: "1-6", type: "spot", time: "20:30", title: "Harukas 300 展望台", desc: "地鐵御堂筋線至天王寺，使用樂享券第 1 項，俯瞰關西 360 度夜景", mustGo: true },
+            { id: "1-7", type: "spot", time: "22:00", title: "返回心齋橋飯店", desc: "超商買宵夜，早點休息儲備體力" }
+          ]
+        },
+        {
+          date: "1/6",
+          weekDay: "週二",
+          title: "京都經典精華一日遊（嵐山竹林＋抹茶 ➔ 清水寺）",
+          hotel: "心齋橋公寓飯店",
+          timeline: [
+            { id: "2-1", type: "transit", time: "08:00", title: "大阪出發 ➔ 阪急京都線經桂站轉乘至嵐山", desc: "約 1 小時車程" },
+            { id: "2-2", type: "spot", time: "09:00", title: "嵐山晨間散策 + 竹林小徑", desc: "人潮少時漫步竹林，參拜野宮神社摸神石祈願良緣學業", mustGo: true },
+            { id: "2-3", type: "spot", time: "11:00", title: "渡月橋散策 + 樂享券小吃兌換", desc: "使用樂享券第 2 項兌換嵐山特色可樂餅或和菓子" },
+            { id: "2-4", type: "transit", time: "12:00", title: "阪急電鐵：嵐山直達「京都河原町」", desc: "約 25 分鐘直達京都市中心" },
+            { id: "2-5", type: "spot", time: "12:30", title: "高島屋 T8 中村藤吉 (Nakamura Tokichi)", desc: "享用午餐，品嚐招牌宇治抹茶生茶凍（免專程跑宇治）", mustGo: true },
+            { id: "2-6", type: "spot", time: "14:00", title: "清水寺與二年坂、三年坂散策", desc: "參觀懸空清水舞台、音羽之瀑，漫步傳統町家古街", mustGo: true },
+            { id: "2-7", type: "transit", time: "18:00", title: "祇園四條站搭乘京阪電車返回大阪", desc: "約 50 分鐘回到難波吃晚餐" }
+          ]
+        },
+        {
+          date: "1/7",
+          weekDay: "utton type="submit" class="flex-1 py-2.5 rounded-xl bg-[#F8B4AD] ink-border font-bold text-sm shadow-[2px_2px_0px_#383431] tap-effect">同步儲存</button>
           </div>
         </form>
       </div>
